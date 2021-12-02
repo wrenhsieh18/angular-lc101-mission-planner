@@ -3,7 +3,7 @@
 <h3>
     Mission Name:
     <span *ngIf="!editingMission; else editMissionBlock">
-        <span class="editable-text" (click)="editingMission = true;">{{ missionName }}</span>
+        <span *ngIf = "!editingMission; else editMissionBlock;" class="editable-text" (click)="editingMission = true;">{{ missionName }}</span>
     </span>
     <ng-template #editMissionBlock>
         <input #mission (keyup.enter)="updateMission(mission.value)" value="{{ missionName }}"/>
