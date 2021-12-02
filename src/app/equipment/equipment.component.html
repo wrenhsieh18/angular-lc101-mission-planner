@@ -1,7 +1,17 @@
 <h3>Equipment</h3>
 <ul>
-  <li>Habitat dome</li>
-  <li>Drones</li>
-  <li>Food containers</li>
-  <li>Oxygen tanks</li>
+  <li *ngFor = "let equipment of equipmentList">
+    <span *ngIf = "equipmentBeingEdited !== equipment; else promptEquipment" (click) = "equipmentBeingEdited =  equipment">
+      {{ equipment }}
+      <button (click) = "remove(equipment)">Remove</button>
+    </span>
+
+    <ng-template #promptEquipment>
+      <input #editedEquipment type="text" value = "{{ equipment }}">
+      <button (click) = "editingEquipment(editedEquipment.value, equipment)">Save</button>
+    </ng-template>
+  </li>
 </ul>
+
+<input #newEquipment type="text" (keyup.enter) = "addEquipment(newEquipment.value)">
+<button (click) = "addEquipment(newEquipment.value)">Add</button>

@@ -22,16 +22,28 @@ export class CrewComponent implements OnInit {
   }
 
   addToCrew(newMemberName: string, newMemberFirstMission: boolean) {
-    this.crew.push({name: newMemberName, firstMission: newMemberFirstMission});
+    let crewName = this.crew.map( (object)=> object['name']);
+    if (crewName.includes(newMemberName)) {
+      window.alert(`${newMemberName} is already in the crew list.`);
+    } else {
+      this.crew.push({name: newMemberName, firstMission: newMemberFirstMission});
+    }
   }
 
   remove(removeMember: object) {
     this.crew.splice(this.crew.indexOf(removeMember),1)
   }
 
-  editMember(editedMemberName: string, editedMemberFirstMission: boolean, editedMember: object) {
-    editedMember['name'] = editedMemberName;
-    editedMember['firstMission'] = editedMemberFirstMission;
-    this.memberBeingEdited = null;
+  editMember(editedMemberName: string, editedMemberFirstMission: boolean, memberBeingEditedNow: object) {
+    let crewName = this.crew.map( (object)=> object['name']);
+    // crewName.splice(crewName.indexOf(memberBeingEditedNow['name']),1);
+
+    if (editedMemberName === memberBeingEditedNow['name'] || !crewName.includes(editedMemberName)) {
+      memberBeingEditedNow['name'] = editedMemberName;
+      memberBeingEditedNow['firstMission'] = editedMemberFirstMission;
+      this.memberBeingEdited = null;
+    } else {
+      window.alert(`${editedMemberName} is already in the crew list.`);
+    }
   }
 }
