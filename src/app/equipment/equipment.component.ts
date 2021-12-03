@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { truncate } from 'fs';
 
 @Component({
   selector: 'app-equipment',
@@ -45,11 +44,21 @@ export class EquipmentComponent implements OnInit {
    }
 
    canAdd(itemNeeded: object): boolean {
-    if ((this.cargoMass+itemNeeded['mass']) <= this.maximumAllowedMass && this.cargoHold.length+1 <= 10) {
+    if ((this.cargoMass+itemNeeded['mass']) <= this.maximumAllowedMass && this.cargoHold.length+1 <= 10 && this.countItemInArray(itemNeeded) < 2) {
       return true;
     } else {
       return false;
     }
+   }
+
+   countItemInArray(item: object): number {
+    let qt = 0; 
+    for (let cargo of this.cargoHold) {
+      if (item === cargo) {
+        qt += 1;
+      }
+    }
+    return qt;
    }
 
    buttonColorChange() {
@@ -65,6 +74,11 @@ export class EquipmentComponent implements OnInit {
    emptyHold() {
      this.cargoHold = [];
      this.cargoMass = 0;
+   }
+
+   removeSpecificItem(item: object) {
+    this.cargoHold.splice(this.cargoHold.indexOf(item),1);
+    this.cargoMass -= item['mass'];
    }
    
 }
