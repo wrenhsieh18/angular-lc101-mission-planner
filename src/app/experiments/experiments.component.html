@@ -1,7 +1,18 @@
 <div class="displayBox">
     <h3>Possible Experiments</h3>
     <ul>
-      <li *ngFor="let experiment of experiments">{{experiment}}</li>
+      <li *ngFor="let experiment of experiments">
+        <button (click) = "addToPlan(experiment)" [disabled] = "!canAdd(experiment, plannedExperiments)">Add into Plan</button>
+        {{experiment}}
+      </li>
     </ul>
+    Add more possible experiments:<input #newExperiment type="text" (keyup.enter) = "addNewExperiment(newExperiment.value)">
+    <button (click) = "addNewExperiment(newExperiment.value)">Add</button>
 </div>
 <hr>
+<div class="displayBox">
+  <h3>Planned Experiments: {{ plannedExperiments.length }}/{{ maxExperiments }}</h3>
+  <ul>
+    <li *ngFor="let experiment of plannedExperiments">{{experiment}}</li>
+  </ul>
+</div>
