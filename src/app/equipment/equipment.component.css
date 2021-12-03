@@ -12,6 +12,15 @@ h3 {
     text-align: center;
 }
 
+p.remainingColorChange {
+    color: red;
+    font-weight: bold;
+}
+
+button.buttonColorChange {
+    background-color: yellow;
+}
+
 /* Add an 'active' class to style the background of the 'Add to Cargo Hold' buttons. */
 
 

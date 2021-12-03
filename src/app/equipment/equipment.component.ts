@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { truncate } from 'fs';
 
 @Component({
   selector: 'app-equipment',
@@ -21,11 +22,49 @@ export class EquipmentComponent implements OnInit {
    cargoMass: number = 0;
    maximumAllowedMass: number = 2000;
    maxItems: number = 10;
+   //buttonColorChange: boolean = false;
 
    constructor() { }
 
    ngOnInit() { }
 
    // Code your addItem function here:
+   addToCargoHold(itemNeeded: object) {
+    if (this.canAdd(itemNeeded)) {
+      this.cargoHold.push(itemNeeded);
+      this.cargoMass = this.sumCargoMass(this.cargoHold);
+    } 
+   }
+
+   sumCargoMass(actualCargoHold: object[]): number {
+    let sum: number = 0;
+    for (let item of actualCargoHold) {
+      sum += item['mass'];
+    }
+    return sum;
+   }
+
+   canAdd(itemNeeded: object): boolean {
+    if ((this.cargoMass+itemNeeded['mass']) <= this.maximumAllowedMass && this.cargoHold.length+1 <= 10) {
+      return true;
+    } else {
+      return false;
+    }
+   }
+
+   buttonColorChange() {
+     let ifAllCanAddArr = this.equipmentItems.map( (item) => {return this.canAdd(item)} );
+     console.log(ifAllCanAddArr);
+     if (ifAllCanAddArr.includes(false)) {
+       return true;
+     } else {
+       return false;
+     }
+   }
+
+   emptyHold() {
+     this.cargoHold = [];
+     this.cargoMass = 0;
+   }
    
 }
